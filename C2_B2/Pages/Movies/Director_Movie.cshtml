@@ -1,0 +1,84 @@
+﻿@page
+@model C2_B2.Pages.Movies.Director_MovieModel
+@{
+}
+<h1>List  of movies</h1>
+<div class="d-flex">
+    <div class="flex">
+        <div><h4>Director</h4></div>
+        @foreach(var director in Model.Directors)
+        {
+            <div style="width:150px;">
+                @if (director.Id == Model.directorID)
+                {
+                     <a href="./Director_Movie?id=@director.Id" style="font-size:25px;">
+                    @director.FullName
+                    </a>
+                }
+                else
+                {
+                    <a href="./Director_Movie?id=@director.Id">
+                        @director.FullName
+                    </a>
+                }               
+                
+            </div>
+        }
+        
+    </div>
+
+    <div style="margin-left:200px">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>ReleaseDate</th>
+                    <th>Description</th>
+                    <th>Language</th>
+                     <th>Director</th>
+                    <th>Producer</th>
+                    <th style="width:200px;">Star</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var movie in Model.Movies)
+                {
+                    <tr>
+                        <td>@movie.Title</td>
+                        <td>@movie.ReleaseDate</td>
+                        <td>@movie.Description</td>
+                        <td>@movie.Language</td>
+                        <td>@movie.Director.FullName</td>
+
+                        <td>@movie.Producer.Name</td>
+                        <td style="width:200px;">
+                        @foreach (var star in movie.Stars)
+                        {
+                            @star.FullName<br />
+                        }
+                        </td>
+
+                        @*<td><a href="./Director_Movie?deleteId=@movie.Id&id=@movie.Director.Id">Delete</a></td>*@
+                        <td><a href="javascript:void(0)" onclick="onDelete(@movie.Id)">Delete</a></td>
+                    </tr>
+                }
+                
+
+            </tbody>
+        </table>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
+    <script>
+        var connection = new signalR.HubConnectionBuilder().withUrl("/movieHub").build();
+        connection.start();
+        function onDelete(movieId){
+            connection.invoke("DeleteMovie", movieId);
+        }
+        connection.on("LoadMovie", ()=>{
+            location.reload();
+        });
+    </script>
+
+</div>

@@ -19,43 +19,12 @@ namespace C2_B2.Hubs
                      .Include(x => x.Stars)
                      .Include(x => x.Genres)
                      .FirstOrDefault(x => x.Id == deleteId);
-
-
-                foreach (var item in movie.Stars.ToList())
-                {
-                    movie.Stars.Remove(item);
-                }
-
-                foreach (var item in movie.Genres.ToList())
-                {
-                    movie.Genres.Remove(item);
-                }
-
-                foreach (var item in _context.Stars.Include(x => x.Movies).ToList())
-                {
-                    foreach (var i in item.Movies.ToList())
-                    {
-                        if (i.Id == deleteId)
-                        {
-                            item.Movies.Remove(i);
-                        }
-                    }
-                }
-
-                foreach (var item in _context.Genres.Include(x => x.Movies).ToList())
-                {
-                    foreach (var i in item.Movies.ToList())
-                    {
-                        if (i.Id == deleteId)
-                        {
-                            item.Movies.Remove(i);
-                        }
-                    }
-                }
+                movie.Stars.Clear();
+                movie.Genres.Clear();
                 _context.Movies.Remove(movie);
                 _context.SaveChanges();
             }
-            await Clients.All.SendAsync("LoadMovie");
+            await Clients.All.SendAsync("LoadMovie", deleteId);
         }
     }
 }

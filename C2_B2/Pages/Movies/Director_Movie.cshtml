@@ -45,7 +45,7 @@
 
                 @foreach (var movie in Model.Movies)
                 {
-                    <tr>
+                    <tr id="@movie.Id">
                         <td>@movie.Title</td>
                         <td>@movie.ReleaseDate</td>
                         <td>@movie.Description</td>
@@ -76,8 +76,10 @@
         function onDelete(movieId){
             connection.invoke("DeleteMovie", movieId);
         }
-        connection.on("LoadMovie", ()=>{
-            location.reload();
+        connection.on("LoadMovie", (deleteId)=>{
+            const element = document.getElementById(deleteId);
+            element.remove();
+            //location.reload();
         });
     </script>
 

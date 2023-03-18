@@ -1,0 +1,60 @@
+﻿<Window x:Class="C1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:C1"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.1*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2.5*"/>
+            <RowDefinition Height="0.3*"/>
+            <RowDefinition  />
+        </Grid.RowDefinitions>
+        <StackPanel Background="LightBlue"></StackPanel>
+        <TextBlock HorizontalAlignment="Left" FontSize="20" FontWeight="Bold"  Foreground="Red" Margin="10,10,0,0" TextWrapping="Wrap" Text="Add stars" VerticalAlignment="Top"/>
+        <Label Content="Star's name" HorizontalAlignment="Left" Margin="10,42,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="10,73,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="390" Name="starName"/>
+        <Label Content="Gender" HorizontalAlignment="Left" Margin="10,100,0,0" VerticalAlignment="Top"/>
+        <DockPanel  HorizontalAlignment="Left"  Margin="10,132,0,90" Width="216">
+            <RadioButton Content="Male" Width="48" IsChecked="true" Name="male"/>
+            <RadioButton Content="Female" Width="125" Name="female"/>
+        </DockPanel>
+        <Label Content="Date of birth" HorizontalAlignment="Left" Margin="10,155,0,0" VerticalAlignment="Top"/>
+
+        <DatePicker HorizontalAlignment="Left" Margin="10,181,0,0" VerticalAlignment="Top" Width="390" Name="dob"/>
+        <Label Content="Description" HorizontalAlignment="Left" Margin="10,210,0,0" VerticalAlignment="Top"/>
+        <RichTextBox Width="390" HorizontalAlignment="Left" Margin="10,241,0,78" Name="description">
+            <FlowDocument>
+                <Paragraph>
+                    <Run Text=""/>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+        <Label Content="Nationality" HorizontalAlignment="Left" Margin="10,307,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.488,3.738"/>
+        <ComboBox DisplayMemberPath="Name"  HorizontalAlignment="Left" Name="nationality" Margin="10,338,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.714,1.732" Width="390"/>
+
+        <Button Content="Add To Below List" Margin="118,384,135,0" Grid.RowSpan="2" Click="Btn_add" />
+        <Button Content="Import From File" Margin="10,384,301,0" Grid.RowSpan="2" Click="Btn_import"/>
+        <Button Content="Save to Database" Margin="284,384,0,0" Grid.RowSpan="2" Click="Btn_save"/>
+
+        <ListView Grid.Row="2" Grid.ColumnSpan="2" Margin="0,10,0,0" Name="lvStars">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="StartName" Width="100" DisplayMemberBinding="{Binding Path=FullName}"/>
+                    <GridViewColumn Header="Gender" Width="100" DisplayMemberBinding="{Binding Path=Gender}"/>
+                    <GridViewColumn Header="DateOfBirth" Width="150" DisplayMemberBinding="{Binding Path=Dob}"/>
+                    <GridViewColumn Header="Description" Width="250" DisplayMemberBinding="{Binding Path=Description}"/>
+                    <GridViewColumn Header="Nationality" Width="200" DisplayMemberBinding="{Binding Path=Nationality}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        
+
+    </Grid>
+</Window>
